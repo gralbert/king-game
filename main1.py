@@ -48,7 +48,14 @@ def sow(resources):
 
 def krasota(resources):
     """ The function is responsible for the formatting of the game """
-
+    print('-' * 78)
+    print('|{:^10}|{:^10}|{:^10}|{:^10}|{:^10}|{:^10}|{:^10}|'.format('Земля', 'Казна', 'Крестьяне', 'Зерно', 'Смута',
+                                                                      'Армия', 'Год'))
+    print('|{:^10}|{:^10}|{:^10}|{:^10}|{:^10}|{:^10}|{:^10}|'.format(resources['Земля'], resources["Казна"],
+                                                                      resources["Крестьяне"], resources["Зерно"],
+                                                                      resources["Смута"], resources["Армия"],
+                                                                      resources["Год"]))
+    print('-' * 78)
 
 
 def give_zerno(resources):
@@ -64,6 +71,25 @@ def give_zerno(resources):
 
 def man_event(phrases):
     """ The function is responsible for control events """
+    cost = prob(1000, 10000)
+    print('{} {} {}'.format(random.choice(phrases), cost, constants.GIVE_MONEY))
+    answer = str(input())
+    answer.lower()
+    if answer == "d":
+        resources['Казна'] -= cost
+        event_ques = ['da', 'no']
+        event_ans = random.choice(event_ques)
+        if event_ans == 'da':
+            print('Событие успешно состоялось...')
+            payment = prob(1, 4)
+            pay_after = cost * payment
+            resources['Казна'] += pay_after
+        else:
+            print('Купец свалил в другое королевство и кинул вас...')
+
+    else:
+        print('Купец очень расстроен, что вы ему не помогли...')
+    print(resources)
 
 
 def not_man_event(phrases):
