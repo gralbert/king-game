@@ -89,7 +89,52 @@ def not_man_event(phrases):
 
 def war(phrases):
     """ The function is responsible for the management of the war """
+    army = resources['Армия']
+    print('{} {}'.format(random.choice(phrases), constants.MOBIL))
+    answer = str(input())
+    answer.lower()
+    if answer == 'd':
+        intel_ans = ['da', 'no']
+        intel = random.choice(intel_ans)
+        if intel == 'da':
+            enemy = prob(50, 200)
+            print('Король, ваши разведчики успешно узнали численность врага! Армия врага составляет:', enemy)
+        else:
+            print('Король, у нас плохие вести: разведчики не вернулись. Нет никакой информации о враге')
+        cost = prob(100, 200)
+        print('Лесные разбойники согласны вам помочь по', cost, 'бушелей за бойцы. Сколько купить волонтеров?')
+        ans_war = int(input())
 
+        Kazna = resources['Казна']
+        oppor = Kazna // cost
+        cost_war = ans_war * cost
+        if Kazna < cost_war:
+            print('Правитель, у вас недостаточно золота в казне. Вы можете купить:', oppor, 'Купить?')
+            answer = str(input())
+            if answer == 'd':
+                resources['Казна'] = Kazna - oppor
+                resources['Армия'] = army + oppor
+            else:
+                print('Король, армия готова к войне')
+        win = round(random.random(),2)
+        print('Вероятность победы - ', win)
+        resources['Армия'] = int(resources['Армия'] // (random.random() + 1))
+        resources['Крестьяне'] = int(resources['Крестьяне'] // (random.random() + 1))
+        if win>0.7:
+            print('Вы победили!')
+            resources['Земля'] = int(resources['Земля'] * (random.random() + 1))
+
+        else:
+            print('Война проиграна!')
+            resources['Земля'] = int(resources['Земля'] // (random.random() + 1))
+
+    else:
+        ans_enemy = ['da', 'no']
+        war = random.choice(ans_enemy)
+        if war == 'da':
+            print('Враждебное королевство настроенно агрессивно. Война будет')
+        else:
+            print('Враждебное королевство предлагает заключить мирный договор')
 
 
 def record(your_name, rec_str):
